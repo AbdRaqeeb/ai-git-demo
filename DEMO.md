@@ -47,20 +47,23 @@ flowchart TD
    > Under review — exactly where this belongs before any code exists."
 2. Show PR #2 is where it becomes code: `gh pr view 2`.
 
-### 3:00–5:30 — THE core: AI drives git, you gate it
-Walk each step, showing the command, pausing, then the AI executes on approval:
+### 3:00–5:30 — THE core: AI drove the git, you gate the merge
+Show the *existing* PR — AI already did the git steps; this is the review gate:
 
 | Step | Command | What you say |
 | --- | --- | --- |
-| Branch | `git checkout -b feat/team-trend` | "AI proposes the branch name — feature-scoped, short-lived." |
-| Commit | `git commit -m "feat: team trend (RFC-0002)"` | "Every commit references the RFC." |
-| PR | `gh pr create --body-file docs/rfc-0002-team-trend.md` | "The PR body IS the RFC. Review in one place." |
+| PR | `gh pr view 2` | "The PR body IS the RFC. Review in one place." |
 | Diff | `gh pr diff` | "The whole change — small enough to read on screen." |
+| Log | `gh pr view 2 --json commits` | "Every commit references the RFC." |
 | Checks | `gh pr checks` | "CI builds the Vue app. Green." |
 | Approve | `gh pr review 2 --approve` | **Pause.** "This is the control point. AI proposed — *I* approve." |
 | Merge | `gh pr merge 2 --squash --delete-branch` | "One click, audit trail kept." |
 
 **Slow down at Approve.** That pause is the whole story.
+
+> Optional: to show the *creation* side live, re-run the branch + PR from the
+> cheat-sheet before the call — but the recorded demo only needs the review
+> gate and merge.
 
 ### 5:30–6:30 — The result
 1. `git checkout main && git pull`
@@ -82,7 +85,7 @@ Walk each step, showing the command, pausing, then the AI executes on approval:
 | `gh` command errors | `gh pr view 2` for a safe screen; move on |
 | Live app breaks | `npm run preview` serves the last build |
 | Branch confusion | `git checkout main && git pull`, re-run `npm run dev` |
-| PR #2 already merged | Replay: branch → commit → `gh pr create` (30s) |
+| PR #2 already merged | Replay: `git checkout -b feat/team-trend`, commit, `gh pr create --body-file docs/rfc-0002-team-trend.md` |
 
 ## Talking points (if Q&A goes long)
 
