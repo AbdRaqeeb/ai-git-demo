@@ -1,7 +1,12 @@
 <script setup>
-import { totals } from "./data.js";
+import { ref } from "vue";
+import { totals, teams } from "./data.js";
 import MetricsCard from "./components/MetricsCard.vue";
 import TeamTable from "./components/TeamTable.vue";
+import TeamSelect from "./components/TeamSelect.vue";
+import TeamTrendChart from "./components/TeamTrendChart.vue";
+
+const selectedTeam = ref(teams[0].id);
 </script>
 
 <template>
@@ -19,8 +24,12 @@ import TeamTable from "./components/TeamTable.vue";
     </section>
 
     <section class="panel">
-      <h2>Per-team breakdown</h2>
-      <TeamTable />
+      <div class="panel-head">
+        <h2>Per-team breakdown</h2>
+        <TeamSelect v-model="selectedTeam" />
+      </div>
+      <TeamTable :filter="selectedTeam" />
+      <TeamTrendChart v-if="selectedTeam" :team="selectedTeam" />
     </section>
   </main>
 </template>
@@ -52,8 +61,16 @@ header {
     border-color: #2b3038;
   }
 }
+.panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
 h2 {
   font-size: 1rem;
-  margin: 0 0 0.75rem;
+  margin: 0;
 }
 </style>
